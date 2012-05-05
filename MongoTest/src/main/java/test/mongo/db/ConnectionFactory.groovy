@@ -7,17 +7,13 @@ class ConnectionFactory {
 	
     def user = "root", pass = "adm123"
 
-    def getDefaultConnection() {				
-        return getConnection(user, pass)
-    }
+    def getDefaultConnection() { return getConnection(user, pass) }
 
-    def getConnection(user, password) {				
-        Mongo mongo = new Mongo("127.0.0.1")		
-        DB db = mongo.getDB("dbTest")
+    def getConnection(user, password) {
+        
+        DB db = new Mongo("127.0.0.1").getDB("dbTest")
 
-        def value = db.authenticate(user, password.getChars())
-
-        if (value == 0)
+        if(!db.authenticate(user, password.getChars()))
             throw new Exception("Erro ao autenticar no banco")
 
         return db;
