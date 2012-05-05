@@ -1,8 +1,8 @@
 package test.mongo.model
 
-import com.mongodb.BasicDBObject;
+import java.io.Serializable;
 
-class User {
+class User implements Serializable {
 		
 	private Integer id
 	private String name
@@ -27,7 +27,7 @@ class User {
 
 	@Override
 	public String toString() {
-		return String.format("ID: %i, NAME: %s, PASSWORD: %s, ENABLED: %i", id, name, password, enabled);
+		return String.format("ID: %s, NAME: %s, PASSWORD: %s, ENABLED: %s", id, name, password, (enabled) ? "true" : "false");
 	}
 	
 }

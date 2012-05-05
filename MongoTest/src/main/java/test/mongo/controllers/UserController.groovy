@@ -1,37 +1,43 @@
 package test.mongo.controllers
 
-import java.util.ArrayList;
-
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-
 import test.mongo.dao.UserDAO;
+import test.mongo.interfaces.DefaultDAO
+import test.mongo.interfaces.IUserController
 import test.mongo.model.User;
 
-class UserController {
+class UserController implements IUserController {
 
-	def dao = new UserDAO()
+	private DefaultDAO dao = new UserDAO()
+
+	@Override	
+	def add(user) {
+		dao.add(user)
+	}
 	
-	def getUsers() {
-		
-		def newList = new ArrayList<User>()
-		def users = dao.getList()
-		
-		def user;
-		
-		while(users.hasNext()) {
+	@Override
+	def delete(id) {
+		dao.delete(dao.find(id)[0])
+	}
+	
+	@Override
+	def update(id, key, value) {
+		dao.update(dao.find(id).put(key, value))
+	}
+	
+	@Override
+	def getAll() {
 			
-			def u = users.next();
-			
-			user = new User(id: 		u.get("id"),
-							name:		u.get("name"),
-							password:	u.get("password"),
-							enabled:	u.get("enabled"))
-			
-			newList.add(user) 
-		}
+		def newList = []
+		dao.getAll().each { newList.add(newUser(it)) }
 		
-		return user		
+		return newList
+	}
+
+	private def newUser(item) {
+		return [ id: item.get("id"),
+				 name: item.get("name"),
+				 password: item.get("password"),
+				 enabled: item.get("enabled") ] as User
 	}
 	
 }
