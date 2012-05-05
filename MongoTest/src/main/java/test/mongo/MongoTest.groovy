@@ -1,17 +1,14 @@
 package test.mongo
 
-import test.mongo.controllers.MongoController
-import test.mongo.controllers.UserController
-import test.mongo.interfaces.IMongoController
-import test.mongo.interfaces.IUserController
 import test.mongo.model.User
+import test.mongo.services.*
 
 
 class MongoTest {
 	
 	private Scanner console = new Scanner(System.in)
-	private IMongoController mongoController = new MongoController()
-	private IUserController userController = new UserController()
+	private MongoService mongo = new MongoService()
+	private UserService user = new UserService()
 	
 	/**
 	 * Método que inicia e controla as funcionalidades da aplicação
@@ -89,7 +86,7 @@ class MongoTest {
 		println "*  e -> Editar usuários"
 		println "*  l -> Listar usuários"
 		println "*  r -> Remover usuário"
-		println "*  d -> Remover coleção"
+		println "*  d -> Remover coControllerleção"
 		println "*  q -> Encerrar"
 		println "***********************************"
 	}
